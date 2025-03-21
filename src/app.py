@@ -1,11 +1,15 @@
 from flask import Flask, render_template, redirect, url_for, request, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+import logging
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'supersecretkey'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 db = SQLAlchemy(app)
+
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
 
 # Database Model
 class User(db.Model):
@@ -67,6 +71,17 @@ def logout():
     session.pop('user', None)
     flash('Logged out successfully.', 'info')
     return redirect(url_for('login'))
+
+# Error handling
+@app.errorhandler(500)
+def internal_error(error):
+    logging.error(f"Server Error: {error}")
+    return render_template('500.html'), 500
+
+@app.errorhandler(404)
+def not_found_error(error):
+    logging.error(f"Page Not Found: {error}")
+    return render_template('404.html'), 404
 
 if __name__ == '__main__':
     app.run(debug=True)
