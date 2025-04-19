@@ -26,51 +26,53 @@ with app.app_context():
 def home():
     if 'user' in session:
         return render_template('home.html', username=session['user'])
-    return redirect(url_for('login'))
+    return redirect(url_for('login_register'))
 
-# Login Route
+# Combined Login and Registration Route
 @app.route('/', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        user = User.query.filter_by(username=username).first()
+def login_register():
+    try:
+        if request.method == 'POST':
+            if 'login' in request.form:
+                # Handle login
+                username = request.form['username']
+                password = request.form['password']
+                user = User.query.filter_by(username=username).first()
 
-        if user and check_password_hash(user.password, password):
-            session['user'] = username
-            flash('Login successful!', 'success')
-            return redirect(url_for('home'))
-        else:
-            flash('Invalid credentials. Please try again.', 'danger')
+                if user and check_password_hash(user.password, password):
+                    session['user'] = username
+                    flash('Login successful!', 'success')
+                    return redirect(url_for('home'))
+                else:
+                    flash('Invalid credentials. Please try again.', 'danger')
 
-    return render_template('login.html')
+            elif 'register' in request.form:
+                # Handle registration
+                username = request.form['username']
+                password = request.form['password']
+                hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
 
-# Registration Route
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+                if User.query.filter_by(username=username).first():
+                    flash('Username already exists. Please log in.', 'warning')
+                    return redirect(url_for('login_register'))
 
-        if User.query.filter_by(username=username).first():
-            flash('Username already exists. Please log in.', 'warning')
-            return redirect(url_for('login'))
+                new_user = User(username=username, password=hashed_password)
+                db.session.add(new_user)
+                db.session.commit()
+                flash('Registration successful! Please log in.', 'success')
+                return redirect(url_for('login_register'))
 
-        new_user = User(username=username, password=hashed_password)
-        db.session.add(new_user)
-        db.session.commit()
-        flash('Registration successful! Please log in.', 'success')
-        return redirect(url_for('login'))
-
-    return render_template('register.html')
+        return render_template('login.html')
+    except Exception as e:
+        logging.error(f"Error during login or registration: {e}")
+        return render_template('500.html'), 500
 
 # Logout Route
 @app.route('/logout')
 def logout():
     session.pop('user', None)
     flash('Logged out successfully.', 'info')
-    return redirect(url_for('login'))
+    return redirect(url_for('login_register'))
 
 # Error handling
 @app.errorhandler(500)

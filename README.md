@@ -1,6 +1,6 @@
-# Paperlit
+# Welcome to Paperlit
 
-Paperlit is a Flask-based web application for user registration, login, and session management.
+A powerful open-source platform for checking document originality and ensuring content integrity. Whether you're an educator, student, or researcher, Paperlit helps you maintain academic standards with ease.
 
 ## Setup
 

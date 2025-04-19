@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paperlit</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- App Description -->
+        <div class="toggle-panel">
+            <h2>Welcome to Paperlit!</h2>
+            <p>A powerful open-source platform handling your document originality check needs for academic and professional integrity.
+                Sign up to get started or log in if you already have an account.</p>
+        </div>
+
+        <!-- Form Container -->
+        <div class="form-container">
+            <!-- Sign In Form -->
+            <div id="sign-in-form">
+                <form method="POST" action="{{ url_for('login_register') }}">
+                    <h2>Sign In</h2>
+                    <input type="text" id="login-username" name="username" placeholder="Username" required>
+                    <input type="password" id="login-password" name="password" placeholder="Password" required>
+                    <button type="submit" name="login">Login</button>
+                    <p>Don't have an account? <a href="#" id="show-signup">Sign Up</a></p>
+                </form>
+            </div>
+
+            <!-- Sign Up Form -->
+            <div id="sign-up-form">
+                <form method="POST" action="{{ url_for('login_register') }}">
+                    <h2>Create Account</h2>
+                    <input type="text" id="register-username" name="username" placeholder="Username" required>
+                    <input type="email" id="register-email" name="email" placeholder="Email" required>
+                    <input type="password" id="register-password" name="password" placeholder="Password" required>
+                    <button type="submit" name="register">Register</button>
+                    <p>Already have an account? <a href="#" id="show-signin">Sign In</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
