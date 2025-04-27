@@ -4,10 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - PaperLit</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <h2>Welcome, {{ username }}!</h2>
-    <p>You are successfully logged in.</p>
-    <a href="{{ url_for('logout') }}">Logout</a>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="profile-container">
+            <img src="{{ url_for('static', filename='images/avatar-placeholder.png') }}" alt=" " class="profile-avatar" id="profile-avatar">
+            <div class="dropdown-menu" id="dropdown-menu">
+                <a href="{{ url_for('edit_profile') }}" class="dropdown-item">Edit Profile</a>
+                <a href="{{ url_for('logout') }}" class="dropdown-item">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>PaperLit</h2>
+        <hr>
+        <h3>History</h3>
+        <ul class="history-list">
+            {% for document in documents %}
+                <li>
+                    <a href="{{ url_for('download_document', document_id=document.id) }}">{{ document.document_name }}</a>
+                    <span>Uploaded on {{ document.uploaded_at.strftime('%Y-%m-%d') }}</span>
+                </li>
+            {% else %}
+                <li>No documents uploaded yet.</li>
+            {% endfor %}
+        </ul>
+        <button class="new-prompt-btn" id="new-review-btn">New Review</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h1 id="main-heading">Welcome to PaperLit</h1>
+        <form action="{{ url_for('upload_document') }}" method="POST" enctype="multipart/form-data" class="upload-form" id="upload-form" style="display: none;">
+            <label for="document-name">Document Name:</label>
+            <input type="text" id="document-name" name="document_name" placeholder="Enter document name" required>
+
+            <label for="document-file">Upload Document:</label>
+            <div class="drag-drop-area" id="drag-drop-area">
+                <p>Drag and drop your file here, or click to select a file</p>
+                <input type="file" id="document-file" name="document_file" required>
+            </div>
+
+            <button type="submit" class="upload-btn">Upload</button>
+        </form>
+    </div>
+
+    <script>
+        // Toggle dropdown menu visibility
+        const profileAvatar = document.getElementById('profile-avatar');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+
+        profileAvatar.addEventListener('click', () => {
+            dropdownMenu.classList.toggle('show');
+        });
+
+        // Close dropdown if clicked outside
+        document.addEventListener('click', (event) => {
+            if (!profileAvatar.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.remove('show');
+            }
+        });
+
+        // Show the form when "New Review" button is clicked
+        document.getElementById('new-review-btn').addEventListener('click', () => {
+            const form = document.getElementById('upload-form');
+            const heading = document.getElementById('main-heading');
+            form.style.display = 'block'; // Show the form
+            heading.textContent = 'Upload a Document'; // Update the heading
+        });
+    </script>
 </body>
 </html>

@@ -1,33 +1,5 @@
-/* General Styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
 }
 
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: linear-gradient(to right, #e3dee9, #abb1ba);
-}
-
-.container {
-  position: relative;
-  width: 800px;
-  height: 500px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-  display: flex; /* Use flexbox to align children side by side */
-}
-
-/* Toggle Panel */
-.toggle-panel {
-  width: 40%; /* Adjust width to take 40% of the container */
   height: 100%;
   background: #239ef0;
   color: #fff;
@@ -49,9 +21,6 @@ body {
   line-height: 1.5;
 }
 
-/* Form Container */
-.form-container {
-  width: 60%; /* Adjust width to take 60% of the container */
   height: 100%;
   display: flex;
   justify-content: center;
@@ -61,96 +30,10 @@ body {
 
 .form-container form {
   background-color: #fff;
-  padding: 30px; /* Add padding inside the form */
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Restore original shadow */
   width: 100%;
-  max-width: 400px; /* Limit the form width */
-}
-
-.form-container form h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 1.5rem;
-  color: #333;
-}
-
-.form-container form input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
-}
-
-.form-container form input:focus {
-  border-color: #239ef0;
-  outline: none;
-}
-
-.form-container form button {
-  width: 100%;
-  padding: 10px;
-  background: #239ef0;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.form-container form button:hover {
-  background: #1a7dc0;
-}
-
-.form-container form p {
-  text-align: center;
-  margin-top: 10px;
-  font-size: 0.9rem;
-}
-
-.form-container form a {
-  color: #239ef0;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.form-container form a:hover {
-  text-decoration: underline;
-}
-
-/* Form Visibility */
 #sign-in-form {
-  display: block; /* Ensure the sign-in form is visible by default */
 }
 
-#sign-up-form {
-  display: none; /* Ensure the sign-up form is hidden by default */
-}
-
-/* Responsive Design */
-@media (max-width: 600px) {
-  .container {
-    flex-direction: column; /* Stack toggle panel and forms vertically on small screens */
     width: 100%;
-    height: auto; /* Allow height to adjust dynamically */
-  }
-
-  .toggle-panel {
-    width: 100%; /* Make toggle panel full width */
-    height: auto; /* Adjust height dynamically */
-    padding: 20px;
-  }
-
-  .form-container {
-    width: 100%; /* Make form container full width */
-    height: auto; /* Adjust height dynamically */
-    padding: 20px;
-  }
-
-  .form-container form {
-    max-width: 100%; /* Allow form to take full width */
   }
 }
