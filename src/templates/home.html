@@ -11,13 +11,15 @@
 <body>
     <!-- Top Bar -->
     <div class="top-bar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="PaperLit">
+        </div>
         <div class="profile-container">
             <img src="{{ url_for('static', filename='images/avatar-placeholder.png') }}" alt=" " class="profile-avatar" id="profile-avatar">
             <div class="dropdown-menu" id="dropdown-menu">
                 <a href="{{ url_for('edit_profile') }}" class="dropdown-item">Edit Profile</a>
                 <a href="{{ url_for('logout') }}" class="dropdown-item">Logout</a>
             </div>
-        </div>
     </div>
 
     <!-- Sidebar -->

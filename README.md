@@ -6,7 +6,7 @@ A powerful open-source platform for checking document originality and ensuring c
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/paperlit.git
+    git clone https://github.com/yourusernameKytonThaundi/paperlit.git
     cd paperlit
     ```
 
@@ -23,8 +23,7 @@ A powerful open-source platform for checking document originality and ensuring c
 
 4. Run the application:
     ```bash
-    cd src
-    python app.py
+    python src/app.py
     ```
 
 ## Database Setup
